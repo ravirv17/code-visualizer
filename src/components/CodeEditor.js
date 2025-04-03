@@ -1,25 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-function CodeEditor({ onCodeChange, onLanguageChange }) {
-  const [code, setCode] = useState(`// Bubble Sort Example
-function bubbleSort(arr) {
-  let len = arr.length;
-  for (let i = 0; i < len; i++) {
-    for (let j = 0; j < len - i - 1; j++) {
-      if (arr[j] > arr[j + 1]) {
-        // Swap elements
-        let temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-      }
+function CodeEditor({ onCodeChange, onLanguageChange, initialCode, language }) {
+  const [code, setCode] = useState(initialCode || '');
+
+  // Update internal code state when initialCode prop changes
+  useEffect(() => {
+    if (initialCode) {
+      setCode(initialCode);
     }
-  }
-  return arr;
-}
-
-// Example usage:
-let array = [64, 34, 25, 12, 22, 11, 90];
-bubbleSort(array);`);
+  }, [initialCode]);
 
   const handleCodeChange = (e) => {
     setCode(e.target.value);
@@ -32,22 +21,18 @@ bubbleSort(array);`);
     <div className="code-editor">
       <h2>Input Code</h2>
       <div className="editor-controls">
-        <select
-          onChange={(e) => onLanguageChange && onLanguageChange(e.target.value)}
-          defaultValue="javascript"
+        <select 
+          onChange={(e) => onLanguageChange && onLanguageChange(e.target.value)} 
+          value={language}
         >
           <option value="javascript">JavaScript</option>
-          <option value="python" disabled>
-            Python (Coming Soon)
-          </option>
-          <option value="java" disabled>
-            Java (Coming Soon)
-          </option>
+          <option value="python">Python</option>
+          <option value="java">Java</option>
         </select>
       </div>
-      <textarea
-        value={code}
-        onChange={handleCodeChange}
+      <textarea 
+        value={code} 
+        onChange={handleCodeChange} 
         placeholder="Enter your code here..."
         rows={15}
       />
