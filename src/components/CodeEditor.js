@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function CodeEditor({ onCodeChange, onLanguageChange, initialCode, language }) {
+function CodeEditor({ onCodeChange, onLanguageChange, onAlgorithmChange, initialCode, language, algorithm }) {
   const [code, setCode] = useState(initialCode || '');
 
   // Update internal code state when initialCode prop changes
@@ -21,14 +21,31 @@ function CodeEditor({ onCodeChange, onLanguageChange, initialCode, language }) {
     <div className="code-editor">
       <h2>Input Code</h2>
       <div className="editor-controls">
-        <select 
-          onChange={(e) => onLanguageChange && onLanguageChange(e.target.value)} 
-          value={language}
-        >
-          <option value="javascript">JavaScript</option>
-          <option value="python">Python</option>
-          <option value="java">Java</option>
-        </select>
+        <div className="control-row">
+          <label>Language:</label>
+          <select 
+            onChange={(e) => onLanguageChange && onLanguageChange(e.target.value)} 
+            value={language}
+          >
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+          </select>
+        </div>
+        
+        <div className="control-row">
+          <label>Algorithm:</label>
+          <select 
+            onChange={(e) => onAlgorithmChange && onAlgorithmChange(e.target.value)} 
+            value={algorithm}
+          >
+            <option value="bubbleSort">Bubble Sort</option>
+            <option value="mergeSort">Merge Sort</option>
+            <option value="quickSort">Quick Sort</option>
+            <option value="insertionSort">Insertion Sort</option>
+            <option value="selectionSort">Selection Sort</option>
+          </select>
+        </div>
       </div>
       <textarea 
         value={code} 
